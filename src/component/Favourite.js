@@ -55,16 +55,19 @@ export class Favourite extends Component {
 			dealRating: e.target.value,
 		});
 	};
-	updateData = async () => {
+	updateData = async (e) => {
+		e.preventDefault();
+		const rate = { title: this.state.title, dealRating: this.state.dealRating };
 		const request = await axios.put(
 			`http://localhost:8000/game/favourite/${this.state.slug}`,
-			{ title: this.state.title },
-			{ dealRating: this.state.dealRating }
+			rate
 		);
 		this.setState({
 			favDataApi: request.data,
 			showFavData: true,
 		});
+		console.log(request.data);
+		console.log(this.state.dealRating);
 	};
 	render() {
 		return (
@@ -73,7 +76,7 @@ export class Favourite extends Component {
 					<Form
 						slug={this.state.slug}
 						title={this.state.title}
-						dealRating={this.dealRating}
+						dealRating={this.state.dealRating}
 						updateTitle={this.updateTitle}
 						updateRate={this.updateRate}
 						updateData={this.updateData}
